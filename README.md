@@ -56,38 +56,82 @@ interface range fa0/1 - 2
  switchport access vlan 20
 exit
 ```
+On MLS0:
+```bash
+interface fa0/1
+ switchport mode access
+ switchport access vlan 10
+
+interface fa0/2
+ switchport mode access
+ switchport access vlan 20
+exit
+```
+### Step 3️ – Configure Trunk Ports Between Switches
+```bash
+On Trunk Interfaces (Fa0/3 and Fa0/4 on all switches):\
+interface range fa0/3 - 4
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+exit
+```
+
+### Step 4️ – Assign IP Addresses to PCs
+Open PC > Desktop > IP Configuration in Packet Tracer.
+
+| PC  | IP Address    | VLAN | Connected To |
+| --- | ------------- | ---- | ------------ |
+| PC0 | 192.168.10.10 | 10   | MLS1 (Fa0/1) |
+| PC3 | 192.168.10.11 | 10   | MLS1 (Fa0/2) |
+| PC1 | 192.168.10.12 | 10   | MLS0 (Fa0/1) |
+| PC2 | 192.168.20.10 | 20   | MLS2 (Fa0/1) |
+| PC4 | 192.168.20.11 | 20   | MLS2 (Fa0/2) |
+
+Subnet Mask: 255.255.255.0
 
 
+### Step 5️ – Configure STP Root Bridge (On MLS0 Only)
+```bash
+conf t
+spanning-tree vlan 1 priority 4096
+exit
+```
+Or use this alternative:
+```bash
+spanning-tree vlan 1 root primary
+```
+
+### Step 6️ – Validate STP Operation
+On all switches, run:
+```bash
+show spanning-tree
+```
+Check:
+
+MLS0 is elected as root bridge.
+
+One port in MLS1 or MLS2 is in blocking state.
+
+No Layer 2 loop exists.
+
+---
+
+Testing and Validation
+
+ping from PC0 to PC3 – Should succeed (same VLAN 10)
+
+ping from PC2 to PC4 – Should succeed (same VLAN 20)
+
+ping from PC0 to PC2 – Should fail (different VLANs)
+
+Use: show interfaces trunk
+
+to verify trunk ports.
 
 
-
-
-
+---
 
  
-### 2. PC IP Configuration
-   | PC  | IP Address   | Subnet Mask   | Default Gateway |
-| --- | ------------ | ------------- | --------------- |
-| PC0 | 192.168.1.10 | 255.255.255.0 | 192.168.1.1     |
-| PC1 | 192.168.1.20 | 255.255.255.0 | 192.168.1.1     |
-
-Use IP Configuration in Packet Tracer for each PC.
-
----
-### 3. Observe STP Behavior
-Wait for 30-60 seconds for STP convergence.
-
-Use the CLI command below to verify STP status:
-```bash
-SW1# show spanning-tree
-```
----
-### Verify:
-
-Root Bridge ID
-Port roles: Root Port (RP), Designated Port (DP), and Blocking
-
----
 ### Key Learnings
 Understand how STP elects the Root Bridge
 
