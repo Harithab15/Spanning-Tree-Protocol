@@ -116,7 +116,7 @@ No Layer 2 loop exists.
 
 ---
 
-Testing and Validation
+### Testing and Validation
 
 ping from PC0 to PC3 – Should succeed (same VLAN 10)
 
@@ -124,7 +124,7 @@ ping from PC2 to PC4 – Should succeed (same VLAN 20)
 
 ping from PC0 to PC2 – Should fail (different VLANs)
 
-Use: show interfaces trunk
+Use: ```bash show interfaces trunk ```
 
 to verify trunk ports.
 
@@ -138,8 +138,9 @@ Understand how STP elects the Root Bridge
 Identify which ports are placed in Blocking State
 
 Visualize STP convergence and loop prevention
-
 Modify Bridge Priority to change Root Bridge election
+
+
 ---
 ### How to Run
 Download the .pkt file from this repository
@@ -147,7 +148,7 @@ Download the .pkt file from this repository
 Open with Cisco Packet Tracer
 
 Observe STP convergence
+Run show spanning-tree on each switch to analyze behavior  
 
-Run show spanning-tree on each switch to analyze behavior   
 ---
 ⭐ If you found this lab useful, give it a ⭐️ and follow for more networking labs!
