@@ -49,6 +49,7 @@ Switch(config)# hostname SW3
 Switch(config)# spanning-tree vlan 1 priority 32768
 Switch(config)# exit
 ```
+---
 ### 2. PC IP Configuration
    | PC  | IP Address   | Subnet Mask   | Default Gateway |
 | --- | ------------ | ------------- | --------------- |
@@ -57,6 +58,7 @@ Switch(config)# exit
 
 Use IP Configuration in Packet Tracer for each PC.
 
+---
 ### 3. Observe STP Behavior
 Wait for 30-60 seconds for STP convergence.
 
@@ -64,12 +66,13 @@ Use the CLI command below to verify STP status:
 ```bash
 SW1# show spanning-tree
 ```
+---
 Verify:
 
 Root Bridge ID
 
 Port roles: Root Port (RP), Designated Port (DP), and Blocking
-
+---
 ### Key Learnings
 Understand how STP elects the Root Bridge
 
@@ -78,7 +81,7 @@ Identify which ports are placed in Blocking State
 Visualize STP convergence and loop prevention
 
 Modify Bridge Priority to change Root Bridge election
-
+---
 ### How to Run
 Download the .pkt file from this repository
 
