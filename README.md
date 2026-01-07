@@ -67,11 +67,11 @@ Use the CLI command below to verify STP status:
 SW1# show spanning-tree
 ```
 ---
-Verify:
+### Verify:
 
 Root Bridge ID
-
 Port roles: Root Port (RP), Designated Port (DP), and Blocking
+
 ---
 ### Key Learnings
 Understand how STP elects the Root Bridge
@@ -90,5 +90,5 @@ Open with Cisco Packet Tracer
 Observe STP convergence
 
 Run show spanning-tree on each switch to analyze behavior   
-
+---
 ⭐ If you found this lab useful, give it a ⭐️ and follow for more networking labs!
