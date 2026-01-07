@@ -2,54 +2,69 @@
 
 This lab demonstrates how **Spanning Tree Protocol (STP)** prevents Layer 2 loops by electing a root bridge and blocking redundant paths in a switched network. The topology is designed and tested using **Cisco Packet Tracer**.
 
+##  Lab Topology
 ![Lab Screenshot](./stp_lab_topology.png) <!-- Add your image here with same name -->
 
 ---
 
-## Lab Objective
+### Devices in the Topology
 
-To understand and simulate **Spanning Tree Protocol** in action, analyze port roles (Root, Designated, Blocking), and observe loop prevention mechanisms in a switched network environment.
-
----
-
-## Topology Overview
-
-- **3 Switches**: Switch1 (SW1), Switch2 (SW2), Switch3 (SW3)
-- **2 PCs**: PC0 and PC1 connected to edge switches
-- **Inter-Switch Links**: Redundant links to create Layer 2 loop scenario
-- **Spanning Tree Behavior**: Observe which switch becomes the **Root Bridge**, and which ports are placed in **Blocking State**
+| Device | Role       | Connected Ports     | Notes                |
+|--------|------------|---------------------|----------------------|
+| MLS0   | Core Switch (Root Bridge) | Fa0/1, Fa0/2 (PCs), Fa0/3, Fa0/4 (to MLS1 & MLS2) | Set as STP Root |
+| MLS1   | Access Switch | Fa0/1, Fa0/2 (PCs), Fa0/3, Fa0/4 (to MLS0 & MLS2) |                  |
+| MLS2   | Access Switch | Fa0/1, Fa0/2 (PCs), Fa0/3, Fa0/4 (to MLS0 & MLS1) |                  |
+| PCs    | End Devices   | Each connected to Fa0/1 or Fa0/2 of switches      | VLAN 10 or 20     |
 
 ---
 
-## Step-by-Step Lab Guide
+##  Lab Objectives
 
-### 1. Device Configuration
+-  Prevent loops using STP in a redundant Layer 2 topology
+-  Configure VLANs for end-device segmentation
+-  Trunk links between switches for VLAN propagation
+-  Assign IP addresses to end devices and test connectivity
+-  Set STP root bridge manually
 
-**Switch1 (SW1):**
-```bash
-Switch> enable
-Switch# configure terminal
-Switch(config)# hostname SW1
-Switch(config)# spanning-tree vlan 1 priority 24576
-Switch(config)# exit
-```
-###  Switch2 (SW2):
-```bash
-Switch> enable
-Switch# configure terminal
-Switch(config)# hostname SW2
-Switch(config)# spanning-tree vlan 1 priority 28672
-Switch(config)# exit
-```
-###  Switch3 (SW3):
-```bash
-Switch> enable
-Switch# configure terminal
-Switch(config)# hostname SW3
-Switch(config)# spanning-tree vlan 1 priority 32768
-Switch(config)# exit
-```
 ---
+
+##  Step-by-Step Lab Configuration
+
+### Step 1️ – VLAN Configuration (On All Switches)
+
+```bash
+conf t
+vlan 10
+ name SALES
+vlan 20
+ name HR
+exit
+```
+
+###  Step 2️ – Assign VLANs to Access Ports
+on MLS1
+```bash
+interface range fa0/1 - 2
+ switchport mode access
+ switchport access vlan 10
+exit
+```
+On MLS2:
+```bash
+interface range fa0/1 - 2
+ switchport mode access
+ switchport access vlan 20
+exit
+```
+
+
+
+
+
+
+
+
+ 
 ### 2. PC IP Configuration
    | PC  | IP Address   | Subnet Mask   | Default Gateway |
 | --- | ------------ | ------------- | --------------- |
